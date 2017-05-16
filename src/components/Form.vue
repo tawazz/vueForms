@@ -1,6 +1,7 @@
 <script>
     import Vue from 'vue'
     import Section from './section.vue'
+    import Group from './group.vue'
     const jdata = [
     {
         "children": [
@@ -135,46 +136,59 @@
         "label": "Personnel Details"
     }
 ];
-const renderChildren = function (h,type,name) {
-    console.log(h);
-    switch (type) {
-        case 'text':
-            return (
-                <div>
-                    <input type="text" name={name} /><br/>
-                </div>
-            )
-            break;
-        case 'text_area':
-            return (
-                <div>
-                    <textarea name={name} /><br/>
-                </div>
-            )
-            break;
-        default:
-        return "";
-    }
-}
 
     export default {
         methods:{
-            renderChildren(type,name) {
-                switch (type) {
+            renderChildren(c) {
+                switch (c.type) {
                     case 'text':
                         return (
-                            <div>
-                                <input type="text" name={name} /><br/>
+                            <div class="form-group">
+                              <label for={c.label} >{c.label}</label>
+                              <input type="text" class="form-control" name={c.name} />
+                              <p class="help-block">{c.help_text}</p>
                             </div>
                         )
                         break;
                     case 'text_area':
                         return (
-                            <div>
-                                <input type="textarea" name={name} /><br/>
+                            <div class="form-group">
+                              <label for="">{c.label}</label>
+                              <textarea class="form-control" rows="5" name={c.name} /><br/>
+                              <p class="help-block">{c.help_text}</p>
                             </div>
                         )
                         break;
+                        case 'label':
+                            return (
+                                <label>{c.label}</label>
+                            )
+                            break;
+                        case 'radiobuttons':
+                            console.log(c.conditions);
+                            return (
+                                <div class="form-group">
+                                    <label>{c.label}</label>
+                                        {c.options.map(op =>{
+                                            return(
+                                                <div class="radio">
+                                                    <label>
+                                                        {op.required &&
+                                                            <input name={c.name} type="radio" value={op.value} required checked={op.value == c.value ? "checked" :"" }/>
+                                                        }
+                                                        {!op.required &&
+                                                            <input name={c.name} type="radio" value={op.value} />
+                                                        }
+                                                        {op.label}
+                                                    </label>
+                                                </div>
+                                            )
+                                        })}
+                                        <p class="help-block">{c.help_text}</p>
+                                </div>
+                            )
+                            break;
+
                     default:
                     return "";
                 }
@@ -183,22 +197,27 @@ const renderChildren = function (h,type,name) {
         },
         render(h) {
             let vm =this;
-            console.log(vm);
             return (
                 <div>
                     {jdata.map(d =>{
-                        return (
-                            <Section label={d.label}>
-                                {d.children.map(c=>{
-                                    return (
-                                        <div>
-                                            <label>{c.label}</label><br/>
-                                            {this.renderChildren(c.type,c.name)}
-                                        </div>
-                                    )
-                                })}
-                            </Section>
-                        )
+                        if (d.type === 'section') {
+                            return (
+                                <Section label={d.label} Key={d.name}>
+                                    {d.children.map(c=>{
+                                        return (
+                                            <div>
+                                                {this.renderChildren(c)}
+                                            </div>
+                                        )
+                                    })}
+                                </Section>
+                            )
+                        }else{
+                            return (
+                                <Group label={d.label} name={d.name} help_text={d.help_text} isRemovable={d.isRemovable}/>
+                            )
+                        }
+
                     })}
                 </div>
             )
