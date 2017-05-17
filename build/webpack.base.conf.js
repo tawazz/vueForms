@@ -59,7 +59,8 @@ module.exports = {
     plugins:[
         new webpack.ProvidePlugin({
            $: "jquery",
-           jQuery: "jquery"
+           jQuery: "jquery",
+           "select2": "../node_modules/select2/dist/js/select2.full.min.js"
        })
     ]
 }
