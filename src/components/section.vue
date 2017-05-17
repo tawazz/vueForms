@@ -2,12 +2,12 @@
     <div class="panel panel-default" >
       <div class="panel-heading">
         <h3 class="panel-title">{{label}}
-            <a :href="'#pdbody'+Key" data-toggle="collapse" expanded="true" :aria-controls="'pdbody'+Key">
+            <a :href="'#'+Key" data-toggle="collapse" expanded="true" :aria-controls="Key">
                 <span class="glyphicon glyphicon-chevron-down pull-right "></span>
             </a>
         </h3>
       </div>
-      <div class="panel-body collapse in" :id="'pbody'+Key">
+      <div class="panel-body collapse in" :id="Key">
           <slot></slot>
       </div>
     </div>
@@ -21,6 +21,11 @@ export default {
         return {
             title:"Section title"
         }
+    },
+    mounted:function () {
+        $("a[data-toggle]").on('click',function () {
+            console.log(this);
+        });
     }
 }
 </script>
