@@ -5,7 +5,6 @@
     import Radio from './radio.vue'
     import Renderer from '../utils/renderer'
     const jdata = require('@/assets/data')
-    console.log(jdata);
 
     export default {
         methods:{
