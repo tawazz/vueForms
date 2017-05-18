@@ -23,7 +23,8 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      '@': resolve('src'),
+      'datetimepicker':'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
     }
   },
   module: {
@@ -60,7 +61,9 @@ module.exports = {
         new webpack.ProvidePlugin({
            $: "jquery",
            jQuery: "jquery",
-           "select2": "../node_modules/select2/dist/js/select2.full.min.js"
+           "select2": "../node_modules/select2/dist/js/select2.full.min.js",
+           moment: "../node_modules/moment/moment.js",
+           datetimepicker:"../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
        })
     ]
 }
