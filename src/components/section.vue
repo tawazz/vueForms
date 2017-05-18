@@ -24,7 +24,6 @@ export default {
     },
     mounted:function () {
         $("a[data-toggle]").on('click',function () {
-            console.log(this);
         });
     }
 }
