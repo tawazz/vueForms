@@ -9,17 +9,15 @@ import File from '../components/file.vue'
 import Select from '../components/select.vue'
 import DateField from '../components/date-field.vue'
 module.exports = {
-    renderChildren(h,c,data) {
-        if(data !== undefined && c.name in data) {
-              c.value = data[c.name];
-        }
+    renderChildren(h,c,data=null) {
+        var val = (data) ? (data[c.name]) ? data[c.name] : null : null;
         switch (c.type) {
             case 'text':
                 return (
                     <div class="form-group">
                       <label for={c.label} >{c.label}</label>
                       <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-question-circle" data-original-title={c.help_text}>&nbsp;</i>
-                      <input type="text" class="form-control" name={c.name} value={c.value} />
+                      <input type="text" class="form-control" name={c.name} value={val} />
                     </div>
                 )
                 break;
@@ -28,7 +26,7 @@ module.exports = {
                     <div class="form-group">
                       <label for={c.label} >{c.label}</label>
                       <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-question-circle" data-original-title={c.help_text}>&nbsp;</i>
-                      <input type="number" class="form-control" name={c.name} value={c.value} />
+                      <input type="number" class="form-control" name={c.name} value={val} />
                     </div>
                 )
                 break;
@@ -37,28 +35,30 @@ module.exports = {
                     <div class="form-group">
                       <label for={c.label} >{c.label}</label>
                       <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-question-circle" data-original-title={c.help_text}>&nbsp;</i>
-                      <input type="email" class="form-control" name={c.name} value={c.value} />
+                      <input type="email" class="form-control" name={c.name} value={val} />
                     </div>
                 )
                 break;
             case 'select':
                 return (
                     <div>
-                        <Select name={c.name} label={c.label} value={c.value} options={c.options} value={c.value} handleChange={this.selectionChanged}  conditions={c.conditions}/>
+                        <Select name={c.name} label={c.label} value={c.value} options={c.options} value={val} handleChange={this.selectionChanged}  conditions={c.conditions}/>
                         <SelectConditions conditions={c.conditions} renderer={this} name={c.name} />
                     </div>
                 )
                 break;
             case 'multi-select':
                 return (
-                    <Select name={c.name} label={c.label} value={c.value} options={c.options} value={c.value} isMultiple={true} />
+                    <Select name={c.name} label={c.label} value={val} options={c.options} value={val} isMultiple={true} />
                 )
                 break;
             case 'text_area':
                 return (
                     <div class="form-group">
                       <label for="">{c.label}</label>
-                      <textarea class="form-control" rows="5" name={c.name} value={c.value}  /><br/>
+                      <textarea class="form-control" rows="5" name={c.name}>
+                        {val}
+                      </textarea><br/>
                       <p class="help-block">{c.help_text}</p>
                     </div>
                 )
@@ -74,7 +74,7 @@ module.exports = {
                         <label>{c.label}</label>
                             {c.options.map(op =>{
                                 return(
-                                    <Radio name={c.name} label={op.label} value={op.value} savedValue={c.value} handleChange={this.handleRadioChange} conditions={c.conditions} />
+                                    <Radio name={c.name} label={op.label} value={op.value} savedValue={val} handleChange={this.handleRadioChange} conditions={c.conditions} />
                                 )
                             })}
                             <p class="help-block">{c.help_text}</p>
@@ -83,12 +83,16 @@ module.exports = {
                 )
                 break;
             case 'group':
+                var value = null;
+                if(data !== null && data !== undefined) {
+                  value = ( data[c.name] )? data[c.name] : null ;
+                }
                 return (
                     <Group label={c.label} name={c.name} help_text={c.help_text} isRemovable={c.isRemovable}>
                         {c.children.map(c=>{
                             return (
                                 <div>
-                                    {this.renderChildren(h,c)}
+                                    {this.renderChildren(h,c,value)}
                                 </div>
                             )
                         })}
@@ -96,12 +100,16 @@ module.exports = {
                 )
                 break;
             case 'section':
+                var value = null;
+                if(data !== null && data !== undefined) {
+                  value = ( data[c.name] )? data[c.name] : null ;
+                }
                 return (
                     <Section label={c.label} Key={c.name}>
                         {c.children.map(d=>{
                             return (
                                 <div>
-                                    {this.renderChildren(h,d)}
+                                    {this.renderChildren(h,d,value)}
                                 </div>
                             )
                         })}
@@ -128,12 +136,12 @@ module.exports = {
                 break;
             case 'file':
                 return (
-                    <File name={c.name} label={c.label} value={c.value} repeatable={c.isRepeatable} handleChange={this.handleFileChange}/>
+                    <File name={c.name} label={c.label} value={val} repeatable={c.isRepeatable} handleChange={this.handleFileChange}/>
                 )
                 break;
             case 'date':
                 return (
-                    <DateField name={c.name} label={c.label} value={c.value}  handleChange={this.handleFileChange}/>
+                    <DateField name={c.name} label={c.label} value={val}  handleChange={this.handleFileChange}/>
                 )
                 break;
             default:
@@ -144,23 +152,21 @@ module.exports = {
         var conditions = $(e.target).data('conditions');
         if (conditions && conditions !== undefined) {
             var cons = Object.keys(conditions);
-            var found = false;
-            for (var i = 0; i < cons.length; i++) {
-                if (cons[i] == e.target.value) {
-                    $("#cons_"+e.target.name).toggleClass('hidden ');
-                    found = true;
-                }
-            }
-            if (!found) {
-                $("#cons_"+e.target.name).toggleClass(' hidden');
-
-            }
+            var btns = $('input[name='+e.target.name+']');
+            $.each(btns,function (i,input) {
+                $("#cons_"+input.value).addClass('hidden');
+            });
+            $("#cons_"+e.target.value).removeClass('hidden');
         }
     },
     handleCheckBoxChange(e){
         var conditions = $(e.target).data('conditions');
         var cons = Object.keys(conditions);
-        $("#cons_"+e.target.name).toggleClass('hidden');
+        var btns = $('input[name='+e.target.name+']');
+        $.each(btns,function (i,input) {
+            $("#cons_"+input.value).addClass('hidden');
+        });
+        $("#cons_"+e.target.value).removeClass('hidden');
 
     },
     handleDeclaration(e){
