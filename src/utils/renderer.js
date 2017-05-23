@@ -8,59 +8,43 @@ import Declaration from '../components/declarations.vue'
 import File from '../components/file.vue'
 import Select from '../components/select.vue'
 import DateField from '../components/date-field.vue'
+import TextField from '../components/text.vue'
+import TextArea from '../components/text-area.vue'
 module.exports = {
     renderChildren(h,c,data=null) {
         var val = (data) ? (data[c.name]) ? data[c.name] : null : null;
         switch (c.type) {
             case 'text':
                 return (
-                    <div class="form-group">
-                      <label for={c.label} >{c.label}</label>
-                      <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-question-circle" data-original-title={c.help_text}>&nbsp;</i>
-                      <input type="text" class="form-control" name={c.name} value={val} />
-                    </div>
+                    <TextField type="text" name={c.name} value={val} label={c.label} help_text={c.help_text} />
                 )
                 break;
             case 'number':
                 return (
-                    <div class="form-group">
-                      <label for={c.label} >{c.label}</label>
-                      <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-question-circle" data-original-title={c.help_text}>&nbsp;</i>
-                      <input type="number" class="form-control" name={c.name} value={val} />
-                    </div>
+                    <TextField type="number" name={c.name} value={val} label={c.label} help_text={c.help_text} />
                 )
                 break;
             case 'email':
                 return (
-                    <div class="form-group">
-                      <label for={c.label} >{c.label}</label>
-                      <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-question-circle" data-original-title={c.help_text}>&nbsp;</i>
-                      <input type="email" class="form-control" name={c.name} value={val} />
-                    </div>
+                    <TextField type="email" name={c.name} value={val} label={c.label} help_text={c.help_text} />
                 )
                 break;
             case 'select':
                 return (
                     <div>
-                        <Select name={c.name} label={c.label} value={c.value} options={c.options} value={val} handleChange={this.selectionChanged}  conditions={c.conditions}/>
+                        <Select name={c.name} label={c.label} value={c.value} options={c.options} help_text={c.help_text} value={val} handleChange={this.selectionChanged}  conditions={c.conditions}/>
                         <SelectConditions conditions={c.conditions} renderer={this} name={c.name} />
                     </div>
                 )
                 break;
             case 'multi-select':
                 return (
-                    <Select name={c.name} label={c.label} value={val} options={c.options} value={val} isMultiple={true} />
+                    <Select name={c.name} label={c.label} value={val} options={c.options} value={val} help_text={c.help_text} isMultiple={true} />
                 )
                 break;
             case 'text_area':
                 return (
-                    <div class="form-group">
-                      <label for="">{c.label}</label>
-                      <textarea class="form-control" rows="5" name={c.name}>
-                        {val}
-                      </textarea><br/>
-                      <p class="help-block">{c.help_text}</p>
-                    </div>
+                    <TextArea name={c.name} value={val} label={c.label} help_text={c.help_text} />
                 )
                 break;
             case 'label':
@@ -77,7 +61,6 @@ module.exports = {
                                     <Radio name={c.name} label={op.label} value={op.value} savedValue={val} handleChange={this.handleRadioChange} conditions={c.conditions} />
                                 )
                             })}
-                            <p class="help-block">{c.help_text}</p>
                             <Conditions conditions={c.conditions} renderer={this} name={c.name}/>
                     </div>
                 )
@@ -88,7 +71,7 @@ module.exports = {
                   value = ( data[c.name] )? data[c.name] : null ;
                 }
                 return (
-                    <Group label={c.label} name={c.name} help_text={c.help_text} isRemovable={c.isRemovable}>
+                    <Group label={c.label} name={c.name} help_text={c.help_text} isRemovable={true}>
                         {c.children.map(c=>{
                             return (
                                 <div>
