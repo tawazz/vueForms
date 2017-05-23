@@ -137,9 +137,9 @@ module.exports = {
             var cons = Object.keys(conditions);
             var btns = $('input[name='+e.target.name+']');
             $.each(btns,function (i,input) {
-                $("#cons_"+input.value).addClass('hidden');
+                $("#cons_"+e.target.name+'_'+input.value).addClass('hidden');
             });
-            $("#cons_"+e.target.value).removeClass('hidden');
+            $("#cons_"+e.target.name+'_'+e.target.value).removeClass('hidden');
         }
     },
     handleCheckBoxChange(e){
@@ -148,9 +148,9 @@ module.exports = {
             var cons = Object.keys(conditions);
             var btns = $('input[name='+e.target.name+']');
             $.each(btns,function (i,input) {
-                $("#cons_"+input.value).addClass('hidden');
+                $("#cons_"+e.target.name+'_'+input.value).addClass('hidden');
             });
-            $("#cons_"+e.target.value).removeClass('hidden');
+            $("#cons_"+e.target.name+'_'+e.target.value).removeClass('hidden');
         }
 
     },
@@ -164,9 +164,9 @@ module.exports = {
             var cons = Object.keys(conditions);
             for (var i = 0; i < cons.length; i++) {
                 if (cons[i] == target.value) {
-                    $("#cons_"+target.value).removeClass('hidden');
+                    $("#cons_"+target.name+'_'+target.value).removeClass('hidden');
                 }else{
-                    $("#cons_"+cons[i]).addClass('hidden');
+                    $("#cons_"+target.name+'_'+cons[i]).addClass('hidden');
                 }
             }
         }
