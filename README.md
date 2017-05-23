@@ -1,6 +1,6 @@
-# jforms
+# vueforms
 
-> A Vue.js project
+> A Vue.js json form rendering engine
 
 ## Build Setup
 
