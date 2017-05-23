@@ -1,11 +1,8 @@
 <template lang="html">
     <div class="top-buffer bottom-buffer">
-
-        <p :id="'description_'+name" v-if="isRemovable" >{{help_text}}</p>
-
         <div class="panel panel-default">
             <div class="panel-body">
-                <h4 class="inline">{{label}}</h4>
+                <h4 class="inline">{{label}} <i data-toggle="tooltip" v-if="help_text" data-placement="right" class="fa fa-question-circle" :title="help_text"> &nbsp; </i></h4>
                 <a class="collapse-link-top pull-right" @click.prevent="expand"><span class="glyphicon glyphicon-chevron-down"></span></a>
                 <div class="children-anchor-point collapse in" style="padding-left: 0px"></div>
                 <span :class="{'hidden':isRemovable}" v-if="isPreviewMode">
@@ -41,7 +38,7 @@ export default {
     },
     mounted:function () {
         var vm =this;
-
+        $('[data-toggle="tooltip"]').tooltip();
     }
 }
 </script>

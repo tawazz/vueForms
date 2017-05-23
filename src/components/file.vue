@@ -1,6 +1,7 @@
 <template lang="html">
     <div class="form-group">
         <label>{{label}}</label>
+         <i data-toggle="tooltip" v-if="help_text" data-placement="right" class="fa fa-question-circle" :title="help_text"> &nbsp; </i>
         <div v-if="value">
             <p>
                 Currently: <a :href="value" target="_blank">getURLFilename value</a>
@@ -8,7 +9,6 @@
             <input :name="name+'-existing'" type="hidden" value="getURLFilename value"/>
         </div>
         <input :name="name" type="file" class="form-control" :accept="fileTypes"/>
-        <p class="help-block">{{ help_text }}</p>
     </div>
 </template>
 

@@ -2,7 +2,7 @@
     <div>
         <div class="form-group">
           <label>{{ label }}</label>
-          <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-question-circle" :data-original-title={help_text}>&nbsp;</i>
+          <i data-toggle="tooltip" v-if="help_text" data-placement="right" class="fa fa-question-circle" :title="help_text">&nbsp;</i>
           <select :id="selectid":name="name" class="form-control" :multiple="isMultiple" :data-conditions="cons" style="width:100%">
               <option value="">Select...</option>
               <option v-for="op in options"  :value="op.value" @change="handleChange" :selected="op.value == value">{{ op.label }}</option>

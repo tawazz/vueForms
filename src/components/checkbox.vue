@@ -5,7 +5,7 @@
                 <label>
                     <input :name="name" type="checkbox" data-parsley-required :data-conditions="options" @change="handleChange" />
                     {{ label }}
-                </label><i data-toggle="tooltip" data-placement="right" title="" class="fa fa-question-circle" :data-original-title="help_text">&nbsp;</i>
+                </label><i data-toggle="tooltip" data-placement="right" class="fa fa-question-circle" :title="help_text"> &nbsp; </i>
             </div>
         </div>
     </div>
