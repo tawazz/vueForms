@@ -1,8 +1,4 @@
 <script>
-    import Vue from 'vue'
-    import Section from './section.vue'
-    import Group from './group.vue'
-    import Radio from './radio.vue'
     import Renderer from '../utils/renderer'
     const jdata = require('@/assets/data')
     const jans = require('@/assets/ans')
