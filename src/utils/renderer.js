@@ -144,12 +144,14 @@ module.exports = {
     },
     handleCheckBoxChange(e){
         var conditions = $(e.target).data('conditions');
-        var cons = Object.keys(conditions);
-        var btns = $('input[name='+e.target.name+']');
-        $.each(btns,function (i,input) {
-            $("#cons_"+input.value).addClass('hidden');
-        });
-        $("#cons_"+e.target.value).removeClass('hidden');
+        if (conditions && conditions !== undefined) {
+            var cons = Object.keys(conditions);
+            var btns = $('input[name='+e.target.name+']');
+            $.each(btns,function (i,input) {
+                $("#cons_"+input.value).addClass('hidden');
+            });
+            $("#cons_"+e.target.value).removeClass('hidden');
+        }
 
     },
     handleDeclaration(e){
