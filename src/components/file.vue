@@ -3,19 +3,46 @@
         <label>{{label}}</label>
          <i data-toggle="tooltip" v-if="help_text" data-placement="right" class="fa fa-question-circle" :title="help_text"> &nbsp; </i>
         <div v-if="value">
-            <p>
-                Currently: <a :href="value" target="_blank">getURLFilename value</a>
-            </p>
-            <input :name="name+'-existing'" type="hidden" value="getURLFilename value"/>
+            <div  v-for="v in value">
+                <p>
+                    Currently: <a :href="value" target="_blank">{{v.value}}</a>
+                </p>
+                <input :name="name+'-existing'" type="hidden" :value="value"/>
+            </div>
         </div>
-        <input :name="name" type="file" class="form-control" :accept="fileTypes"/>
+        <div v-for="n in repeat">
+            <input :name="name" type="file" class="form-control" :data-que="n" :accept="fileTypes" @change="handleChange"/><br/>
+        </div>
+
     </div>
 </template>
 
 <script>
 export default {
-    props:['name','label','help_text',"value","fileTypes"],
-    computed:{
+    props:['name','label','help_text',"value","fileTypes","isRepeatable"],
+    data:function(){
+        return {
+            repeat:1
+        }
+    },
+    methods:{
+        handleChange:function (e) {
+            if (this.isRepeatable) {
+                let  el = $(e.target).attr('data-que');
+                let avail = $('input[name='+e.target.name+']');
+                avail = [...avail.map(id => {
+                    return $(avail[id]).attr('data-que');
+                })];
+                avail.pop();
+                if (this.repeat == 1) {
+                    this.repeat+=1;
+                }else {
+                    if (avail.indexOf(el) < 0 ){
+                        this.repeat+=1;
+                    }
+                }
+            }
+        }
     }
 }
 
