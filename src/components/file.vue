@@ -19,7 +19,18 @@
 
 <script>
 export default {
-    props:['name','label','help_text',"value","fileTypes","isRepeatable"],
+    props:{
+        name:String,
+        label:String,
+        help_text:String,
+        value:Array,
+        fileTypes:{
+            default:function () {
+                return "image/*,application/pdf,text/csv,application/msword"
+            }
+        },
+        isRepeatable:Boolean
+    },
     data:function(){
         return {
             repeat:1
