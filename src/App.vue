@@ -1,21 +1,20 @@
-<template>
-  <div id="app">
-      <div class="container">
-          <div class="row">
-              <div class="col-sm-12">
-                  <router-view></router-view>
-              </div>
-          </div>
-      </div>
-  </div>
+<template lang="html">
+    <Renderer :application="app" />
 </template>
 
 <script>
+import Renderer from "@/Form.vue"
 export default {
-  name: 'app'
+    components: {
+        Renderer
+    },
+    data:function () {
+        return {
+            app:require('@/assets/data')
+        }
+    }
 }
 </script>
 
-<style>
-
+<style lang="css">
 </style>

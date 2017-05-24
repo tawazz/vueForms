@@ -1,9 +1,9 @@
 {
-  "name": "jforms",
+  "name": "vueforms",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "A Vue.js json form rendering engine",
   "author": "tawanda",
-  "private": true,
+  "main":"index.js",
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
