@@ -119,7 +119,7 @@ module.exports = {
                 break;
             case 'file':
                 return (
-                    <File name={c.name} label={c.label} value={val} repeatable={c.isRepeatable} handleChange={this.handleFileChange}/>
+                    <File name={c.name} label={c.label} value={val} isRepeatable={c.isRepeatable} handleChange={this.handleFileChange}/>
                 )
                 break;
             case 'date':

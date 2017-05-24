@@ -35,7 +35,7 @@ module.exports = {
         options: vueLoaderConfig
       },
       {
-          test: /bootstrap.+\.(jsx|js)$/,
+          test: /bootstrap.+\.(js)$/,
           loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
       },
       {
