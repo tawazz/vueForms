@@ -10,6 +10,7 @@ import Select from '../components/select.vue'
 import DateField from '../components/date-field.vue'
 import TextField from '../components/text.vue'
 import TextArea from '../components/text-area.vue'
+const sections = [];
 module.exports = {
     renderChildren(h,c,data=null) {
         var val = (data) ? (data[c.name]) ? data[c.name] : null : null;
@@ -87,8 +88,9 @@ module.exports = {
                 if(data !== null && data !== undefined) {
                   value = ( data[c.name] )? data[c.name] : null ;
                 }
+                sections.push({name:c.name,label:c.label});
                 return (
-                    <Section label={c.label} Key={c.name}>
+                    <Section label={c.label} Key={c.name} id={c.name}>
                         {c.children.map(d=>{
                             return (
                                 <div>
@@ -170,5 +172,8 @@ module.exports = {
                 }
             }
         }
+    },
+    getSections(){
+        return sections;
     }
 }

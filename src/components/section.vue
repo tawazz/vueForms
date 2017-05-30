@@ -1,13 +1,13 @@
-<template lang="html" id="section">
+<template lang="html">
     <div class="panel panel-default" >
       <div class="panel-heading">
         <h3 class="panel-title">{{label}}
-            <a :href="'#'+Key" data-toggle="collapse" expanded="true" :aria-controls="Key">
+            <a :href="'#'+section_id" data-toggle="collapse" expanded="true" :aria-controls="section_id">
                 <span class="glyphicon glyphicon-chevron-down pull-right "></span>
             </a>
         </h3>
       </div>
-      <div class="panel-body collapse in" :id="Key">
+      <div class="panel-body collapse in" :id="section_id">
           <slot></slot>
       </div>
     </div>
@@ -20,6 +20,11 @@ export default {
     data:function () {
         return {
             title:"Section title"
+        }
+    },
+    computed:{
+        section_id:function () {
+            return "section_"+this.Key
         }
     },
     mounted:function () {
